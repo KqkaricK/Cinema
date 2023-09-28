@@ -14,11 +14,10 @@ namespace Cinema
         private bool[,] seats = new bool[15, 7];
         private const int size = 32;
         private const int space = 4;
+        private SolidColorBrush redBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#dd2c00"));
+        private SolidColorBrush greenBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00b844"));
 
-        public void SwitchStatus(int x, int y)
-        {
-            seats[x, y] = !seats[x, y];
-        }
+        public void SwitchStatus(int x, int y) => seats[x, y] = !seats[x, y];
 
         public void DrawRectangles(Canvas MyCanvas)
         {
@@ -26,27 +25,19 @@ namespace Cinema
             {
                 for (int i = 0; i < seats.GetLength(0); i++)
                 {
-                    Rectangle rectangle = new Rectangle
+                    Rectangle rectangle = new()
                     {
                         Height = size,
                         Width = size,
+                        Fill = seats[i, j] ? redBrush : greenBrush
                     };
-
-                    rectangle.Fill = seats[i, j] ? Brushes.Red : Brushes.Green;
-
                     rectangle.MouseLeftButtonDown += (sender, e) =>
                     {
-                        // Меняем цвет на противоположный
-                        rectangle.Fill = (rectangle.Fill == Brushes.Red) ? Brushes.Green : Brushes.Red;
-
-                        // Получаем индексы из Canvas.Left и Canvas.Top
+                        rectangle.Fill = (rectangle.Fill == redBrush) ? greenBrush : redBrush;
                         int x = (int)(Canvas.GetLeft(rectangle) / (size + space));
                         int y = (int)(Canvas.GetTop(rectangle) / (size + space));
-
-                        // Вызываем метод для изменения значения в массиве
                         SwitchStatus(x, y);
                     };
-
                     MyCanvas.Children.Add(rectangle);
 
                     Canvas.SetLeft(rectangle, i * (size + space));

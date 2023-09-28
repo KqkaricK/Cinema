@@ -26,5 +26,10 @@ namespace Cinema
             InitializeComponent();
             viborMesta.DrawRectangles(CanvasViborMesta);
         }
+
+        private void Save_Click(object sender, RoutedEventArgs e)
+        {
+            
+        }
     }
 }
