@@ -11,12 +11,10 @@ namespace Cinema
 {
     class ViborMesta
     {
-        private bool[,] seats = new bool[15, 7];
+        private readonly bool[,] seats = new bool[15, 7];
         private const int size = 32;
         private const int space = 4;
-        private SolidColorBrush redBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#dd2c00"));
-        private SolidColorBrush greenBrush = new SolidColorBrush((Color)ColorConverter.ConvertFromString("#00b844"));
-
+        
         public void SwitchStatus(int x, int y) => seats[x, y] = !seats[x, y];
 
         public void DrawRectangles(Canvas MyCanvas)
@@ -25,21 +23,26 @@ namespace Cinema
             {
                 for (int i = 0; i < seats.GetLength(0); i++)
                 {
+                    // Создание прям
                     Rectangle rectangle = new()
                     {
                         Height = size,
                         Width = size,
-                        Fill = seats[i, j] ? redBrush : greenBrush
+                        // Задание цвета
+                        Fill = seats[i, j] ? MainColors.redBrush : MainColors.greenBrush
                     };
+                    // Нажатия мыши на прям
                     rectangle.MouseLeftButtonDown += (sender, e) =>
                     {
-                        rectangle.Fill = (rectangle.Fill == redBrush) ? greenBrush : redBrush;
+                        // Переключение цвета
+                        rectangle.Fill = (rectangle.Fill == MainColors.redBrush) ? MainColors.greenBrush : MainColors.redBrush;
+                        // Вычисление и смена
                         int x = (int)(Canvas.GetLeft(rectangle) / (size + space));
                         int y = (int)(Canvas.GetTop(rectangle) / (size + space));
                         SwitchStatus(x, y);
                     };
+                    // Добавление прям
                     MyCanvas.Children.Add(rectangle);
-
                     Canvas.SetLeft(rectangle, i * (size + space));
                     Canvas.SetTop(rectangle, j * (size + space));
                 }

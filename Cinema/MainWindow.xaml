@@ -20,8 +20,7 @@
         </Canvas>
         <Button Name="Save" Content="Save" Grid.Row="1" 
                 Height="28" Width="100" VerticalAlignment="Bottom"
-                Margin="0,0,0,20" Click="Save_Click">
+                Margin="0,0,0,20" Click="Save_Click" Cursor="Hand">
         </Button>
-        
     </Grid>
 </Window>
