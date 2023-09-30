@@ -20,18 +20,23 @@ namespace Cinema
     /// </summary>
     public partial class MainWindow : Window
     {
-        private ViborMesta viborMesta = new ViborMesta();
         public MainWindow()
         {
             InitializeComponent();
-            viborMesta.DrawRectangles(CanvasViborMesta);
         }
 
-        private void Save_Click(object sender, RoutedEventArgs e)
+        private void ToggleButton_Click(object sender, RoutedEventArgs e)
         {
-            BD.UpdateStatus(viborMesta.seats);
-            //Появление уведомления об операции
-            SaveMessage.MessageQueue.Enqueue("Сохраненно...");
+            Zal1.Visibility = ToggleButton.IsChecked switch
+            {
+                true => Visibility.Hidden,
+                _ => Visibility.Visible,
+            };
+        }
+
+        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            Zal1.Start(combobox.SelectedIndex);
         }
     }
 }

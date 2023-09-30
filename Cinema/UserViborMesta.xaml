@@ -1,0 +1,29 @@
+﻿<UserControl x:Class="Cinema.UserViborMesta"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:Cinema"
+             mc:Ignorable="d" 
+             d:DesignHeight="400" d:DesignWidth="600"
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+             TextElement.FontWeight="Regular"
+             TextElement.FontSize="13"
+             TextOptions.TextFormattingMode="Ideal"
+             TextOptions.TextRenderingMode="Auto"
+             Background="{DynamicResource MaterialDesignPaper}"
+             FontFamily="{DynamicResource MaterialDesignFont}">
+    <Grid>
+        <Canvas Name="CanvasViborMesta"
+                Margin="20 50 0 0">
+        </Canvas>
+        <Button Name="Save" Content="Save" Grid.Row="1" 
+                Height="28" Width="100" VerticalAlignment="Bottom"
+                Margin="0,0,0,20" Click="Save_Click" Cursor="Hand">
+        </Button>
+        <materialDesign:Snackbar
+                x:Name="SaveMessage"
+                MessageQueue="{materialDesign:MessageQueue}" />
+    </Grid>
+</UserControl>

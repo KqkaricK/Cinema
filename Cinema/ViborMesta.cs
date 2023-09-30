@@ -9,7 +9,7 @@ using System.Windows.Shapes;
 
 namespace Cinema
 {
-    class ViborMesta
+    public class ViborMesta
     {
         public readonly bool[,] seats;
         private const int size = 32;
