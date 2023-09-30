@@ -11,14 +11,21 @@ namespace Cinema
 {
     class ViborMesta
     {
-        private readonly bool[,] seats = new bool[15, 7];
+        public readonly bool[,] seats;
         private const int size = 32;
         private const int space = 4;
-        
+
+        public ViborMesta()
+        {
+            // Получаем данные из базы
+            seats = BD.TakenData();
+        }
+
         public void SwitchStatus(int x, int y) => seats[x, y] = !seats[x, y];
 
         public void DrawRectangles(Canvas MyCanvas)
         {
+            using var connection = BD.OpenConnection();
             for (int j = 0; j < seats.GetLength(1); j++)
             {
                 for (int i = 0; i < seats.GetLength(0); i++)

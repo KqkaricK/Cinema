@@ -29,7 +29,9 @@ namespace Cinema
 
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            
+            BD.UpdateStatus(viborMesta.seats);
+            //Появление уведомления об операции
+            SaveMessage.MessageQueue.Enqueue("Сохраненно...");
         }
     }
 }

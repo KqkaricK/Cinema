@@ -22,5 +22,8 @@
                 Height="28" Width="100" VerticalAlignment="Bottom"
                 Margin="0,0,0,20" Click="Save_Click" Cursor="Hand">
         </Button>
+        <materialDesign:Snackbar
+                x:Name="SaveMessage"
+                MessageQueue="{materialDesign:MessageQueue}" />
     </Grid>
 </Window>
