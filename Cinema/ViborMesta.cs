@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Controls;
-using System.Windows.Media;
+﻿using System.Windows.Controls;
 using System.Windows.Shapes;
 
 namespace Cinema
@@ -15,10 +9,10 @@ namespace Cinema
         private const int size = 32;
         private const int space = 4;
 
-        public ViborMesta()
+        public ViborMesta(string tableName)
         {
             // Получаем данные из базы
-            seats = BD.TakenData();
+            seats = BD.TakenData(tableName);
         }
 
         public void SwitchStatus(int x, int y) => seats[x, y] = !seats[x, y];

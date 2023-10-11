@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Cinema
 {
@@ -21,34 +10,37 @@ namespace Cinema
     
     public partial class UserViborMesta : UserControl
     {
-        public static ViborMesta viborMesta = new();
+        private ViborMesta? viborMesta;
+
+        string tableName = "";
 
         public void Start(int a)
         {
-            if (a == 0)
+            tableName = a switch
             {
-                MessageBox.Show("Zal1");
-            }
-            if (a == 1)
-            {
-                MessageBox.Show("Zal2");
-            }
-            if (a == 2)
-            {
-                MessageBox.Show("Zal3");
-            }
+                0 => "zal1",
+                1 => "zal2",
+                2 => "zal3",
+                _ => throw new ArgumentException("Invalid value"),
+            };
+
+            viborMesta = new ViborMesta(tableName);
+            viborMesta.DrawRectangles(CanvasViborMesta);
         }
 
         public UserViborMesta()
         {
             InitializeComponent();
-            viborMesta.DrawRectangles(CanvasViborMesta);
         }
         private void Save_Click(object sender, RoutedEventArgs e)
         {
-            BD.UpdateStatus(viborMesta.seats);
+            if (viborMesta != null && viborMesta.seats != null)
+                BD.UpdateStatus(viborMesta.seats, tableName);
             //Появление уведомления об операции
-            SaveMessage.MessageQueue.Enqueue("Сохраненно...");
+            if (SaveMessage.MessageQueue != null)
+            {
+                SaveMessage.MessageQueue.Enqueue("Сохраненно");
+            }
         }
     }
 }

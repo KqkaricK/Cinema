@@ -21,7 +21,7 @@ namespace Cinema
         }
 
         // Получение данных из базы данных
-        public static bool[,] TakenData()
+        public static bool[,] TakenData(string tableName)
         {
             // Инициализация массива для хранения данных
             bool[,] data = new bool[15, 7];
@@ -31,7 +31,7 @@ namespace Cinema
                 connection.Open();
 
                 // Выполнение запроса для извлечения
-                string sql = "SELECT row, place, taken FROM playses";
+                string sql = $"SELECT row, place, taken FROM {tableName}";
                 using (var command = new NpgsqlCommand(sql, connection))
                 using (var reader = command.ExecuteReader())
                 {
@@ -50,12 +50,12 @@ namespace Cinema
         }
 
         //Обнов данных
-        public static void UpdateStatus(bool[,] seats)
+        public static void UpdateStatus(bool[,] seats, string tableName)
         {
             using var connection = OpenConnection();
             using var command = connection.CreateCommand();
             command.Connection = connection;
-            command.CommandText = "UPDATE playses SET taken = @taken WHERE row = @row AND place = @place";
+            command.CommandText = $"UPDATE {tableName} SET taken = @taken WHERE row = @row AND place = @place";
             for (int x = 0; x < seats.GetLength(0); x++)
             {
                 for (int y = 0; y < seats.GetLength(1); y++)
