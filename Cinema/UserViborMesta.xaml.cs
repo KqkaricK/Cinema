@@ -14,9 +14,9 @@ namespace Cinema
 
         string tableName = "";
 
-        public void Start(int a)
+        public void Start(int indexToTableName)
         {
-            tableName = a switch
+            tableName = indexToTableName switch
             {
                 0 => "zal1",
                 1 => "zal2",
