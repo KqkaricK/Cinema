@@ -23,11 +23,13 @@ namespace Cinema
                 2 => "zal3",
                 _ => throw new ArgumentException("Invalid value"),
             };
-
             viborMesta = new ViborMesta(tableName);
             viborMesta.DrawRectangles(CanvasViborMesta);
         }
-
+        public void ClearCanvas()
+        {
+            CanvasViborMesta.Children.Clear();
+        }
         public UserViborMesta()
         {
             InitializeComponent();
@@ -41,6 +43,12 @@ namespace Cinema
             {
                 SaveMessage.MessageQueue.Enqueue("Сохраненно");
             }
+        }
+
+        private void Add_Click(object sender, RoutedEventArgs e)
+        {
+            AddFilm addFilm = new AddFilm();
+            addFilm.Show();
         }
     }
 }

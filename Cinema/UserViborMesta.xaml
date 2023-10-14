@@ -15,13 +15,20 @@
              Background="{DynamicResource MaterialDesignPaper}"
              FontFamily="{DynamicResource MaterialDesignFont}">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition></ColumnDefinition>
+            <ColumnDefinition></ColumnDefinition>
+        </Grid.ColumnDefinitions>
         <Canvas Name="CanvasViborMesta"
                 Margin="20 50 0 0">
         </Canvas>
-        <Button Name="Save" Content="Save" Grid.Row="1" 
+        <Button Name="Save" Content="Save" Grid.Column="0" 
                 Height="28" Width="100" VerticalAlignment="Bottom"
                 Margin="0,0,0,20" Click="Save_Click" Cursor="Hand">
         </Button>
+        <Button Name="Add" Content="Add" Grid.Column="1"
+                Height="28" Width="100" VerticalAlignment="Bottom"
+                Margin="0,0,0,20" Click="Add_Click" Cursor="Hand"/>
         <materialDesign:Snackbar
                 x:Name="SaveMessage"
                 MessageQueue="{materialDesign:MessageQueue}" />

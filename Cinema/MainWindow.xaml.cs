@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
 using System.Windows.Controls;
 
 namespace Cinema
@@ -17,7 +18,27 @@ namespace Cinema
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            ViborZal.Start(combobox.SelectedIndex);
+            FillComboBox(combobox.SelectedIndex);
+        }
+        public void FillComboBox(int tableValue)
+        {
+            List<string> movieNames = BD.GetFilmNames(tableValue);
+
+            // Очищаем ComboBox
+            filmbox.Items.Clear();
+
+            // Добавляем названия фильмов в ComboBox
+            foreach (string movieName in movieNames)
+            {
+                filmbox.Items.Add(movieName);
+            }
+        }
+
+        private void filmbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (filmbox.SelectedItem != null)
+                ViborZal.Start(combobox.SelectedIndex);
+            else ViborZal.ClearCanvas();
         }
     }
 }

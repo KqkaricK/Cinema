@@ -1,4 +1,5 @@
 ﻿using Npgsql;
+using System.Collections.Generic;
 
 namespace Cinema
 {
@@ -67,6 +68,25 @@ namespace Cinema
                     command.ExecuteNonQuery();
                 }
             }
+        }
+        public static List<string> GetFilmNames(int tableValue)
+        {
+            List<string> filmNames = new List<string>();
+
+            using (var connection = OpenConnection())
+            {
+                string sql = $"SELECT name FROM films WHERE zal={tableValue}";
+                using (var command = new NpgsqlCommand(sql, connection))
+                using (var reader = command.ExecuteReader())
+                {
+                    while (reader.Read())
+                    {
+                        string movieName = reader.GetString(0);
+                        filmNames.Add(movieName);
+                    }
+                }
+            }
+            return filmNames;
         }
     }
 }
