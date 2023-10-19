@@ -10,10 +10,10 @@ namespace Cinema
         private const int size = 32;
         private const int space = 4;
 
-        public ViborMesta(string tableName)
+        public ViborMesta(string nameMovie)
         {
             // Получаем данные из базы
-            seats = BD.TakenData(tableName);
+            seats = BD.TakenData(nameMovie);
         }
 
         public void SwitchStatus(int x, int y) => seats[x, y] = !seats[x, y];
@@ -30,19 +30,23 @@ namespace Cinema
                     {
                         Height = size,
                         Width = size,
+
                         // Задание цвета
                         Fill = seats[i, j] ? MainColors.redBrush : MainColors.greenBrush
                     };
+
                     // Нажатия мыши на прям
                     rectangle.MouseLeftButtonDown += (sender, e) =>
                     {
                         // Переключение цвета
                         rectangle.Fill = (rectangle.Fill == MainColors.redBrush) ? MainColors.greenBrush : MainColors.redBrush;
+
                         // Вычисление и смена
                         int x = (int)(Canvas.GetLeft(rectangle) / (size + space));
                         int y = (int)(Canvas.GetTop(rectangle) / (size + space));
                         SwitchStatus(x, y);
                     };
+
                     // Добавление прям
                     MyCanvas.Children.Add(rectangle);
                     Canvas.SetLeft(rectangle, i * (size + space));

@@ -20,6 +20,7 @@ namespace Cinema
         {
             FillComboBox(combobox.SelectedIndex);
         }
+
         public void FillComboBox(int tableValue)
         {
             List<string> movieNames = BD.GetFilmNames(tableValue);
@@ -37,7 +38,7 @@ namespace Cinema
         private void filmbox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (filmbox.SelectedItem != null)
-                ViborZal.Start(combobox.SelectedIndex);
+                ViborZal.Start(filmbox.SelectedValue.ToString());
             else ViborZal.ClearCanvas();
         }
     }

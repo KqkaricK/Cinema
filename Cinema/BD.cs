@@ -1,5 +1,7 @@
 ﻿using Npgsql;
+using System;
 using System.Collections.Generic;
+using System.Data;
 
 namespace Cinema
 {
@@ -7,6 +9,7 @@ namespace Cinema
     {
         // Строка подкл
         private const string ConnectionString = "Host=localhost;Port=5432;Username=postgres;Password=111;Database=Cinema";
+        
         // Открыть подкл
         public static NpgsqlConnection OpenConnection()
         {
@@ -14,36 +17,36 @@ namespace Cinema
             connection.Open();
             return connection;
         }
+
         // Закрыть подкл
         public static void CloseConnection(NpgsqlConnection connection)
         {
-            if (connection.State == System.Data.ConnectionState.Open)
+            if (connection.State == ConnectionState.Open)
                 connection.Close();
         }
 
         // Получение данных из базы данных
-        public static bool[,] TakenData(string tableName)
+        public static bool[,] TakenData(string movieName)
         {
             // Инициализация массива для хранения данных
             bool[,] data = new bool[15, 7];
 
-            using (var connection = new NpgsqlConnection(ConnectionString))
+            using (var connection = OpenConnection())
             {
-                connection.Open();
-
                 // Выполнение запроса для извлечения
-                string sql = $"SELECT row, place, taken FROM {tableName}";
-                using (var command = new NpgsqlCommand(sql, connection))
-                using (var reader = command.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
-                        int x = reader.GetInt32(0);
-                        int y = reader.GetInt32(1);
-                        bool status = reader.GetBoolean(2);
+                string sql = $"SELECT seats FROM movie WHERE name = @name";
+                using var command = new NpgsqlCommand(sql, connection);
+                command.Parameters.AddWithValue("name", movieName);
 
-                        // Заполнение массива данными из базы
-                        data[x, y] = status;
+                // Извлекаем массив мест и копируем его в массив данных
+                if (command.ExecuteScalar() is bool[,] seatsArray)
+                {
+                    for (int i = 0; i < Math.Min(seatsArray.GetLength(0), 15); i++)
+                    {
+                        for (int j = 0; j < Math.Min(seatsArray.GetLength(1), 7); j++)
+                        {
+                            data[i, j] = seatsArray[i, j];
+                        }
                     }
                 }
             }
@@ -51,39 +54,31 @@ namespace Cinema
         }
 
         //Обнов данных
-        public static void UpdateStatus(bool[,] seats, string tableName)
+        public static void UpdateStatus(bool[,] seats, string movieName)
         {
             using var connection = OpenConnection();
             using var command = connection.CreateCommand();
             command.Connection = connection;
-            command.CommandText = $"UPDATE {tableName} SET taken = @taken WHERE row = @row AND place = @place";
-            for (int x = 0; x < seats.GetLength(0); x++)
-            {
-                for (int y = 0; y < seats.GetLength(1); y++)
-                {
-                    command.Parameters.Clear();
-                    command.Parameters.AddWithValue("taken", seats[x, y]);
-                    command.Parameters.AddWithValue("row", x);
-                    command.Parameters.AddWithValue("place", y);
-                    command.ExecuteNonQuery();
-                }
-            }
+            command.CommandText = "UPDATE movie SET seats = @seats WHERE name = @name";
+            command.Parameters.AddWithValue("seats", seats);
+            command.Parameters.AddWithValue("name", movieName);
+            command.ExecuteNonQuery();
         }
+
+        //Получение имяни фильмов
         public static List<string> GetFilmNames(int tableValue)
         {
-            List<string> filmNames = new List<string>();
+            List<string> filmNames = new();
 
             using (var connection = OpenConnection())
             {
-                string sql = $"SELECT name FROM films WHERE zal={tableValue}";
-                using (var command = new NpgsqlCommand(sql, connection))
-                using (var reader = command.ExecuteReader())
+                string sql = $"SELECT name FROM movie WHERE zal={tableValue}";
+                using var command = new NpgsqlCommand(sql, connection);
+                using var reader = command.ExecuteReader();
+                while (reader.Read())
                 {
-                    while (reader.Read())
-                    {
-                        string movieName = reader.GetString(0);
-                        filmNames.Add(movieName);
-                    }
+                    string movieName = reader.GetString(0);
+                    filmNames.Add(movieName);
                 }
             }
             return filmNames;

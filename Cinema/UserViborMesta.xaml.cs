@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Windows;
 using System.Windows.Controls;
 
@@ -12,32 +13,34 @@ namespace Cinema
     {
         private ViborMesta? viborMesta;
 
-        string tableName = "";
+        //Имя тек. фильма
+        string nameMovieUserViborMesta = "";
 
-        public void Start(int indexToTableName)
+        //При выборе фильма
+        public void Start([NotNull] string nameMovie)
         {
-            tableName = indexToTableName switch
-            {
-                0 => "zal1",
-                1 => "zal2",
-                2 => "zal3",
-                _ => throw new ArgumentException("Invalid value"),
-            };
-            viborMesta = new ViborMesta(tableName);
+            nameMovieUserViborMesta = nameMovie;
+            viborMesta = new ViborMesta(nameMovie);
             viborMesta.DrawRectangles(CanvasViborMesta);
         }
+
+        //Очистка канваса
         public void ClearCanvas()
         {
             CanvasViborMesta.Children.Clear();
         }
+
         public UserViborMesta()
         {
             InitializeComponent();
         }
+
+        //Кнопка Save
         private void Save_Click(object sender, RoutedEventArgs e)
         {
             if (viborMesta != null && viborMesta.seats != null)
-                BD.UpdateStatus(viborMesta.seats, tableName);
+                BD.UpdateStatus(viborMesta.seats, nameMovieUserViborMesta);
+
             //Появление уведомления об операции
             if (SaveMessage.MessageQueue != null)
             {
@@ -45,9 +48,10 @@ namespace Cinema
             }
         }
 
+        //Кнопка Add
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            AddFilm addFilm = new AddFilm();
+            AddFilm addFilm = new();
             addFilm.Show();
         }
     }
