@@ -22,16 +22,16 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <ComboBox Name="combobox" VerticalAlignment="Top" Width="200"
+        <ComboBox Name="comboBox" VerticalAlignment="Top" Width="200"
                   Panel.ZIndex="1" SelectionChanged="ComboBox_SelectionChanged"
                   Margin="20,10,0,0" Grid.Column="0" Grid.Row="0">
             <ComboBoxItem>Зал 1</ComboBoxItem>
             <ComboBoxItem>Зал 2</ComboBoxItem>
             <ComboBoxItem>Зал 3</ComboBoxItem>
         </ComboBox>
-        <ComboBox Name="filmbox" VerticalAlignment="Top" Width="200"
+        <ComboBox Name="movieBox" VerticalAlignment="Top" Width="200"
                   Panel.ZIndex="1"
-                  Margin="20,10,0,0" Grid.Column="1" Grid.Row="0" SelectionChanged="filmbox_SelectionChanged">
+                  Margin="20,10,0,0" Grid.Column="1" Grid.Row="0" SelectionChanged="MovieBox_SelectionChanged">
         </ComboBox>
         <local:UserViborMesta Grid.Column="0" Grid.Row="0" x:Name="ViborZal">
         </local:UserViborMesta>

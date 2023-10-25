@@ -5,12 +5,10 @@ using System.Data;
 
 namespace Cinema
 {
-    public static class BD
+    public static class DatabaseManager
     {
-        // Строка подкл
         private const string ConnectionString = "Host=localhost;Port=5432;Username=postgres;Password=111;Database=Cinema";
-        
-        // Открыть подкл
+
         public static NpgsqlConnection OpenConnection()
         {
             var connection = new NpgsqlConnection(ConnectionString);
@@ -18,43 +16,39 @@ namespace Cinema
             return connection;
         }
 
-        // Закрыть подкл
         public static void CloseConnection(NpgsqlConnection connection)
         {
             if (connection.State == ConnectionState.Open)
                 connection.Close();
         }
 
-        // Получение данных из базы данных
-        public static bool[,] TakenData(string movieName)
+        public static bool[,] RetrieveSeatsData(string movieName)
         {
-            // Инициализация массива для хранения данных
-            bool[,] data = new bool[15, 7];
-
+            bool[,] seatData = new bool[15, 7];
             using (var connection = OpenConnection())
             {
-                // Выполнение запроса для извлечения
                 string sql = $"SELECT seats FROM movie WHERE name = @name";
                 using var command = new NpgsqlCommand(sql, connection);
                 command.Parameters.AddWithValue("name", movieName);
 
-                // Извлекаем массив мест и копируем его в массив данных
-                if (command.ExecuteScalar() is bool[,] seatsArray)
-                {
-                    for (int i = 0; i < Math.Min(seatsArray.GetLength(0), 15); i++)
-                    {
-                        for (int j = 0; j < Math.Min(seatsArray.GetLength(1), 7); j++)
-                        {
-                            data[i, j] = seatsArray[i, j];
-                        }
-                    }
-                }
+                if (command.ExecuteScalar() is bool[,] seatsFromDatabase)
+                    CopyDataToSeatsArray(seatData, seatsFromDatabase);
             }
-            return data;
+            return seatData;
         }
 
-        //Обнов данных
-        public static void UpdateStatus(bool[,] seats, string movieName)
+        private static void CopyDataToSeatsArray(bool[,] data, bool[,] seatsFromDatabase)
+        {
+            for (int i = 0; i < Math.Min(seatsFromDatabase.GetLength(0), 15); i++)
+            {
+                for (int j = 0; j < Math.Min(seatsFromDatabase.GetLength(1), 7); j++)
+                {
+                    data[i, j] = seatsFromDatabase[i, j];
+                }
+            }
+        }
+
+        public static void UpdateMovieSeats(bool[,] seats, string movieName)
         {
             using var connection = OpenConnection();
             using var command = connection.CreateCommand();
@@ -65,23 +59,23 @@ namespace Cinema
             command.ExecuteNonQuery();
         }
 
-        //Получение имяни фильмов
-        public static List<string> GetFilmNames(int tableValue)
+        public static List<string> GetMovieNamesForHall(int hallId)
         {
-            List<string> filmNames = new();
+            List<string> movieNames = new();
 
             using (var connection = OpenConnection())
             {
-                string sql = $"SELECT name FROM movie WHERE zal={tableValue}";
+                string sql = $"SELECT name FROM movie WHERE zal=@hallId";
                 using var command = new NpgsqlCommand(sql, connection);
+                command.Parameters.AddWithValue("hallId", hallId);
                 using var reader = command.ExecuteReader();
                 while (reader.Read())
                 {
                     string movieName = reader.GetString(0);
-                    filmNames.Add(movieName);
+                    movieNames.Add(movieName);
                 }
             }
-            return filmNames;
+            return movieNames;
         }
     }
 }
