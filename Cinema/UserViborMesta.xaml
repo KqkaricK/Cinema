@@ -24,7 +24,9 @@
             <RowDefinition Height="auto" ></RowDefinition>
         </Grid.RowDefinitions>
         <Canvas Name="CanvasViborMesta"
-                Margin="20 50 0 0">
+                Margin="20 100 0 0"
+                VerticalAlignment="Top"
+                HorizontalAlignment="Center">
         </Canvas>
         <Button Name="Save" Content="Save" Grid.Column="0" 
                 Height="28" Width="100" VerticalAlignment="Bottom"

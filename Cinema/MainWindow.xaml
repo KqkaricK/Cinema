@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Cinema"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="600"
+        Title="MainWindow" Height="500" Width="766"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         TextElement.FontWeight="Regular"
@@ -22,18 +22,23 @@
             <ColumnDefinition></ColumnDefinition>
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
+        <Label Name="userNameLabel" Content="userNameLabel" HorizontalAlignment="Center"
+               Margin="0,20,0,0" VerticalAlignment="Top" Panel.ZIndex="2"/>
         <ComboBox Name="comboBox" VerticalAlignment="Top" Width="200"
                   Panel.ZIndex="1" SelectionChanged="ComboBox_SelectionChanged"
-                  Margin="20,10,0,0" Grid.Column="0" Grid.Row="0">
+                  Margin="20,50,0,0" Grid.Column="0" Grid.Row="0">
             <ComboBoxItem>Зал 1</ComboBoxItem>
             <ComboBoxItem>Зал 2</ComboBoxItem>
             <ComboBoxItem>Зал 3</ComboBoxItem>
         </ComboBox>
         <ComboBox Name="movieBox" VerticalAlignment="Top" Width="200"
                   Panel.ZIndex="1"
-                  Margin="20,10,0,0" Grid.Column="1" Grid.Row="0" SelectionChanged="MovieBox_SelectionChanged">
+                  Margin="20,50,0,0" Grid.Column="1" Grid.Row="0"
+                  SelectionChanged="MovieBox_SelectionChanged">
         </ComboBox>
-        <local:UserViborMesta Grid.Column="0" Grid.Row="0" x:Name="ViborZal">
+        <local:UserViborMesta 
+            Grid.Column="0" Grid.Row="0" x:Name="ViborZal"
+            HorizontalAlignment="Center">
         </local:UserViborMesta>
     </Grid>
 </Window>

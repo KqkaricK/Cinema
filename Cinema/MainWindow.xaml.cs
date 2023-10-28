@@ -1,6 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 
 namespace Cinema
 {    
@@ -9,7 +12,14 @@ namespace Cinema
         public MainWindow()
         {
             InitializeComponent();
+            Auto();
             comboBox.SelectedIndex = 0;
+        }
+
+        public void Auto()
+        {
+            Auth.AutorizationCheck();
+            userNameLabel.Content = $"Добро пожаловать, {Auth.GetUserName()}";
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -17,9 +17,9 @@ namespace Cinema
     /// <summary>
     /// Логика взаимодействия для AddFilm.xaml
     /// </summary>
-    public partial class AddFilm : Window
+    public partial class AddMovie : Window
     {
-        public AddFilm()
+        public AddMovie()
         {
             InitializeComponent();
         }

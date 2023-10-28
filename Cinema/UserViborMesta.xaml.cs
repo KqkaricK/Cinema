@@ -38,7 +38,7 @@ namespace Cinema
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            AddFilm addFilm = new();
+            AddMovie addFilm = new();
             addFilm.Show();
         }
     }
