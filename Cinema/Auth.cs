@@ -1,62 +1,42 @@
 ﻿using Npgsql;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 
 namespace Cinema
 {
     public class Auth
     {
-        private const string ConnectionString = "Host=localhost;Port=5432;Username=postgres;Password=111;Database=Cinema";
+        private static readonly string computerName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+
+        public static string? UserName { get; set; } = null;
+        public static string? UserLogin { get; set; } = null;
 
         public static void AutorizationCheck()
         {
-            if (Autorization() == null)
+            Autorization();
+            if (UserLogin == null)
             {
                 MessageBox.Show("Доступ запрещён!");
                 Application.Current.Shutdown();
             }
         }
 
-        public static string Autorization()
+        private static void Autorization()
         {
-            string computerName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            string userName = null;
+            var sqlUserLogin = "SELECT login FROM users WHERE login = @computerName";
+            var sqlUserName = "SELECT name FROM users WHERE login = @computerName";
 
-            using (var connection = new NpgsqlConnection(ConnectionString))
-            {
-                connection.Open();
-                string sql = "SELECT login FROM users WHERE login = @computerName";
-
-                using (var command = new NpgsqlCommand(sql, connection))
-                {
-                    command.Parameters.AddWithValue("computerName", computerName);
-                    userName = command.ExecuteScalar() as string;
-                }
-            }
-            return userName;
+            UserLogin = ExecuteSQLQuery(sqlUserLogin, UserLogin);
+            UserName = ExecuteSQLQuery(sqlUserName, UserName);
         }
-        public static string GetUserName()
+
+        private static string? ExecuteSQLQuery(string sqlQuery, string? userData)
         {
-            string computerName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-            string userName = null;
-
-            using (var connection = new NpgsqlConnection(ConnectionString))
+            using (var command = new NpgsqlCommand(sqlQuery, DatabaseManager.OpenConnection()))
             {
-                connection.Open();
-                string sql = "SELECT name FROM users WHERE login = @computerName";
-
-                using (var command = new NpgsqlCommand(sql, connection))
-                {
-                    command.Parameters.AddWithValue("computerName", computerName);
-                    userName = command.ExecuteScalar() as string;
-                }
+                command.Parameters.AddWithValue("computerName", computerName);
+                userData = command.ExecuteScalar() as string;
             }
-
-            return userName;
+            return userData;
         }
     }
 }

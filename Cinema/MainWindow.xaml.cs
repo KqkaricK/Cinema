@@ -12,14 +12,9 @@ namespace Cinema
         public MainWindow()
         {
             InitializeComponent();
-            Auto();
-            comboBox.SelectedIndex = 0;
-        }
-
-        public void Auto()
-        {
             Auth.AutorizationCheck();
-            userNameLabel.Content = $"Добро пожаловать, {Auth.GetUserName()}";
+            userNameLabel.Content = $"Добро пожаловать, {Auth.UserName}";
+            comboBox.SelectedIndex = 0;
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)

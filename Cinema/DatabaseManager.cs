@@ -7,7 +7,7 @@ namespace Cinema
 {
     public static class DatabaseManager
     {
-        private const string ConnectionString = "Host=localhost;Port=5432;Username=postgres;Password=111;Database=Cinema";
+        public const string ConnectionString = "Host=localhost;Port=5432;Username=postgres;Password=111;Database=Cinema";
 
         public static NpgsqlConnection OpenConnection()
         {
