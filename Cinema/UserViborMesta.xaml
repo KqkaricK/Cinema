@@ -23,19 +23,41 @@
             <RowDefinition></RowDefinition>
             <RowDefinition Height="auto" ></RowDefinition>
         </Grid.RowDefinitions>
+
+        <ComboBox Name="comboBox" Width="200"
+                  VerticalAlignment="Top" HorizontalAlignment="Center"
+                  SelectionChanged="ComboBox_SelectionChanged"
+                  Margin="0,50,0,0" Grid.Column="0" Grid.Row="0">
+            <ComboBoxItem>Зал 1</ComboBoxItem>
+            <ComboBoxItem>Зал 2</ComboBoxItem>
+            <ComboBoxItem>Зал 3</ComboBoxItem>
+        </ComboBox>
+        
+        <ComboBox Name="movieBox" Width="200"
+                  VerticalAlignment="Top" HorizontalAlignment="Center"
+                  Margin="0,50,0,0" Grid.Column="1" Grid.Row="0"
+                  SelectionChanged="MovieBox_SelectionChanged">
+        </ComboBox>
+
         <Canvas Name="CanvasViborMesta"
-                Margin="20 100 0 0"
+                Margin="-18,100"
                 VerticalAlignment="Top"
-                HorizontalAlignment="Center">
+                HorizontalAlignment="Left">
         </Canvas>
+
         <Button Name="Save" Content="Save" Grid.Column="0" 
-                Height="28" Width="100" VerticalAlignment="Bottom"
+                Height="28" Width="100" 
+                VerticalAlignment="Bottom" HorizontalAlignment="Center"
                 Margin="0,0,0,20" Click="Save_Click" Cursor="Hand">
         </Button>
+        
         <Button Name="Add" Content="Add" Grid.Column="1"
-                Height="28" Width="100" VerticalAlignment="Bottom"
+                Height="28" Width="100" 
+                VerticalAlignment="Bottom" HorizontalAlignment="Center"
                 Margin="0,0,0,20" Click="Add_Click" Cursor="Hand"/>
+        
         <materialDesign:Snackbar
+                Width="500"
                 x:Name="SaveMessage" Grid.Row="1" Grid.ColumnSpan="2"
                 MessageQueue="{materialDesign:MessageQueue}"/>
     </Grid>

@@ -5,15 +5,15 @@ namespace Cinema
 {
     public class Auth
     {
-        private static readonly string computerName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
-
-        public static string? UserName { get; set; } = null;
         public static string? UserLogin { get; set; } = null;
+        public static string? UserName { get; set; } = null;
 
-        public static void AutorizationCheck()
+        public static bool IsAuthorized => UserLogin != null;
+
+        public static void AuthorizationCheck()
         {
             Autorization();
-            if (UserLogin == null)
+            if (!IsAuthorized)
             {
                 MessageBox.Show("Доступ запрещён!");
                 Application.Current.Shutdown();
@@ -22,21 +22,17 @@ namespace Cinema
 
         private static void Autorization()
         {
-            var sqlUserLogin = "SELECT login FROM users WHERE login = @computerName";
-            var sqlUserName = "SELECT name FROM users WHERE login = @computerName";
-
-            UserLogin = ExecuteSQLQuery(sqlUserLogin, UserLogin);
-            UserName = ExecuteSQLQuery(sqlUserName, UserName);
+            UserLogin = GetUserData("SELECT login FROM users WHERE login = @computerName");
+            UserName = GetUserData("SELECT name FROM users WHERE login = @computerName");
         }
 
-        private static string? ExecuteSQLQuery(string sqlQuery, string? userData)
+        private static string? GetUserData(string sqlQuery)
         {
-            using (var command = new NpgsqlCommand(sqlQuery, DatabaseManager.OpenConnection()))
-            {
-                command.Parameters.AddWithValue("computerName", computerName);
-                userData = command.ExecuteScalar() as string;
-            }
-            return userData;
+            string computerName = System.Security.Principal.WindowsIdentity.GetCurrent().Name;
+            using var connection = DatabaseManager.OpenConnection();
+            using var command = new NpgsqlCommand(sqlQuery, connection);
+            command.Parameters.AddWithValue("computerName", computerName);
+            return command.ExecuteScalar() as string;
         }
     }
 }

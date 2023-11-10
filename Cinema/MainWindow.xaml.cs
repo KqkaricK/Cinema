@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Threading;
+﻿using System.Windows;
 
 namespace Cinema
 {    
@@ -12,31 +7,8 @@ namespace Cinema
         public MainWindow()
         {
             InitializeComponent();
-            Auth.AutorizationCheck();
+            Auth.AuthorizationCheck();
             userNameLabel.Content = $"Добро пожаловать, {Auth.UserName}";
-            comboBox.SelectedIndex = 0;
-        }
-
-        private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            RefreshFilmList(comboBox.SelectedIndex);
-        }
-
-        public void RefreshFilmList(int tableValue)
-        {
-            List<string> movieNames = DatabaseManager.GetMovieNamesForHall(tableValue);
-            movieBox.Items.Clear();
-            foreach (string movieName in movieNames)
-            {
-                movieBox.Items.Add(movieName);
-            }
-        }
-
-        private void MovieBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            if (movieBox.SelectedItem != null)
-                ViborZal.Start(movieBox.SelectedValue.ToString());
-            else ViborZal.ClearCanvas();
         }
     }
 }
