@@ -50,8 +50,10 @@ namespace Cinema
 
         private void Add_Click(object sender, RoutedEventArgs e)
         {
-            AddMovie addMovie = new();
-            addMovie.Show();
+            if (Window.GetWindow(this) is MainWindow mainWindow)
+            {
+                mainWindow.SwitchVisible(0);
+            }
         }
 
         private void RefreshFilmList(int tableValue)

@@ -23,5 +23,12 @@
             x:Name="ViborZal"
             HorizontalAlignment="Center">
         </local:UserViborMesta>
+        
+        <local:UserAddFilm 
+            x:Name="AddFilm"
+            HorizontalAlignment="Center"
+            Visibility="Collapsed">
+        </local:UserAddFilm>
+
     </Grid>
 </Window>

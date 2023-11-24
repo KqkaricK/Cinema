@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Cinema.UserViborMesta"
+﻿<UserControl x:Class="Cinema.UserAddFilm"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -20,47 +20,41 @@
             <ColumnDefinition></ColumnDefinition>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"></RowDefinition>
             <RowDefinition></RowDefinition>
-            <RowDefinition Height="auto" ></RowDefinition>
+            <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <ComboBox Name="comboBox" Width="200"
+        <TextBox Name="nameFilmBox" Width="200" Grid.ColumnSpan="2"
+                 VerticalAlignment="Top" HorizontalAlignment="Center"
+                 Margin="0,50,0,0" Grid.Column="0" Grid.Row="0"
+                 materialDesign:HintAssist.Hint="Введите название">
+        </TextBox>
+        
+        <ComboBox Name="zalBox" Width="200" Grid.ColumnSpan="2"
                   VerticalAlignment="Top" HorizontalAlignment="Center"
-                  SelectionChanged="ComboBox_SelectionChanged"
-                  Margin="0,50,0,0" Grid.Column="0" Grid.Row="0"
+                  Margin="0,50,0,0" Grid.Column="0" Grid.Row="1"
+                  SelectionChanged="ZalBox_SelectionChanged"
                   materialDesign:HintAssist.Hint="Выбирите зал">
             <ComboBoxItem>Зал 1</ComboBoxItem>
             <ComboBoxItem>Зал 2</ComboBoxItem>
             <ComboBoxItem>Зал 3</ComboBoxItem>
         </ComboBox>
-        
-        <ComboBox Name="movieBox" Width="200"
-                  VerticalAlignment="Top" HorizontalAlignment="Center"
-                  Margin="0,50,0,0" Grid.Column="1" Grid.Row="0"
-                  SelectionChanged="MovieBox_SelectionChanged"
-                  materialDesign:HintAssist.Hint="Выбирите фильм">
-        </ComboBox>
 
-        <Canvas Name="CanvasViborMesta"
-                Margin="-18,100"
-                VerticalAlignment="Top"
-                HorizontalAlignment="Left">
-        </Canvas>
-
-        <Button Name="Save" Content="Save" Grid.Column="0" 
-                Height="28" Width="100" 
+        <Button Name="AddFilm" Content="Save" Grid.Column="0" 
+                Height="28" Width="100" Grid.RowSpan="2"
                 VerticalAlignment="Bottom" HorizontalAlignment="Center"
-                Margin="0,0,0,20" Click="Save_Click" Cursor="Hand">
+                Margin="0,0,20,20" Click="AddFilm_Click" Cursor="Hand">
         </Button>
         
-        <Button Name="Add" Content="Add" Grid.Column="1"
-                Height="28" Width="100"
+        <Button Name="Back" Content="Back" Grid.Column="1"
+                Height="28" Width="100" Grid.RowSpan="2"
                 VerticalAlignment="Bottom" HorizontalAlignment="Center"
-                Margin="0,0,0,20" Click="Add_Click" Cursor="Hand"/>
+                Margin="20,0,0,20" Click="Back_Click" Cursor="Hand"/>
         
         <materialDesign:Snackbar
                 Width="500"
-                x:Name="SaveMessage" Grid.Row="1" Grid.ColumnSpan="2"
+                x:Name="SaveFilmMessage" Grid.Row="2" Grid.ColumnSpan="2"
                 MessageQueue="{materialDesign:MessageQueue}"/>
     </Grid>
 </UserControl>
