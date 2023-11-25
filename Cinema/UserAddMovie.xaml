@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Cinema.UserAddFilm"
+﻿<UserControl x:Class="Cinema.UserAddMovie"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -25,13 +25,13 @@
             <RowDefinition Height="auto"></RowDefinition>
         </Grid.RowDefinitions>
 
-        <TextBox Name="nameFilmBox" Width="200" Grid.ColumnSpan="2"
+        <TextBox Name="NameMovieBox" Width="200" Grid.ColumnSpan="2"
                  VerticalAlignment="Top" HorizontalAlignment="Center"
                  Margin="0,50,0,0" Grid.Column="0" Grid.Row="0"
                  materialDesign:HintAssist.Hint="Введите название">
         </TextBox>
-        
-        <ComboBox Name="zalBox" Width="200" Grid.ColumnSpan="2"
+
+        <ComboBox Name="ZalBox" Width="200" Grid.ColumnSpan="2"
                   VerticalAlignment="Top" HorizontalAlignment="Center"
                   Margin="0,50,0,0" Grid.Column="0" Grid.Row="1"
                   SelectionChanged="ZalBox_SelectionChanged"
@@ -41,20 +41,20 @@
             <ComboBoxItem>Зал 3</ComboBoxItem>
         </ComboBox>
 
-        <Button Name="AddFilm" Content="Save" Grid.Column="0" 
+        <Button Name="AddMovie" Content="Save" Grid.Column="0" 
                 Height="28" Width="100" Grid.RowSpan="2"
                 VerticalAlignment="Bottom" HorizontalAlignment="Center"
-                Margin="0,0,20,20" Click="AddFilm_Click" Cursor="Hand">
+                Margin="0,0,20,20" Click="AddMovie_Click" Cursor="Hand" IsEnabled="False">
         </Button>
-        
+
         <Button Name="Back" Content="Back" Grid.Column="1"
                 Height="28" Width="100" Grid.RowSpan="2"
                 VerticalAlignment="Bottom" HorizontalAlignment="Center"
                 Margin="20,0,0,20" Click="Back_Click" Cursor="Hand"/>
-        
+
         <materialDesign:Snackbar
                 Width="500"
-                x:Name="SaveFilmMessage" Grid.Row="2" Grid.ColumnSpan="2"
+                x:Name="SaveMovieMessage" Grid.Row="2" Grid.ColumnSpan="2"
                 MessageQueue="{materialDesign:MessageQueue}"/>
     </Grid>
 </UserControl>

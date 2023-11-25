@@ -24,7 +24,7 @@
             <RowDefinition Height="auto" ></RowDefinition>
         </Grid.RowDefinitions>
 
-        <ComboBox Name="comboBox" Width="200"
+        <ComboBox Name="ZalComboBox" Width="200"
                   VerticalAlignment="Top" HorizontalAlignment="Center"
                   SelectionChanged="ComboBox_SelectionChanged"
                   Margin="0,50,0,0" Grid.Column="0" Grid.Row="0"
@@ -34,7 +34,7 @@
             <ComboBoxItem>Зал 3</ComboBoxItem>
         </ComboBox>
         
-        <ComboBox Name="movieBox" Width="200"
+        <ComboBox Name="MovieBox" Width="200"
                   VerticalAlignment="Top" HorizontalAlignment="Center"
                   Margin="0,50,0,0" Grid.Column="1" Grid.Row="0"
                   SelectionChanged="MovieBox_SelectionChanged"

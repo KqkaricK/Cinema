@@ -13,20 +13,20 @@ namespace Cinema
         public UserViborMesta()
         {
             InitializeComponent();
-            comboBox.SelectedIndex = 0;
-            RefreshFilmList(comboBox.SelectedIndex);
+            ZalComboBox.SelectedIndex = 0;
+            RefreshMovieList(ZalComboBox.SelectedIndex);
             UpdateSaveButtonState();
         }
 
         private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            RefreshFilmList(comboBox.SelectedIndex);
+            RefreshMovieList(ZalComboBox.SelectedIndex);
         }
 
         private void MovieBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (movieBox.SelectedItem != null)
-                Start(movieBox.SelectedValue.ToString());
+            if (MovieBox.SelectedItem != null)
+                Start(MovieBox.SelectedValue.ToString());
             else
                 CanvasViborMesta.Children.Clear();
             UpdateSaveButtonState();
@@ -54,21 +54,22 @@ namespace Cinema
             {
                 mainWindow.SwitchVisible(0);
             }
+            MovieBox.SelectedIndex = -1;
         }
 
-        private void RefreshFilmList(int tableValue)
+        private void RefreshMovieList(int tableValue)
         {
             List<string> movieNames = DatabaseManager.GetMovieNamesForHall(tableValue);
-            movieBox.Items.Clear();
+            MovieBox.Items.Clear();
             foreach (string movieName in movieNames)
             {
-                movieBox.Items.Add(movieName);
+                MovieBox.Items.Add(movieName);
             }
         }
 
         private void UpdateSaveButtonState()
         {
-            Save.IsEnabled = movieBox.SelectedItem != null;
+            Save.IsEnabled = MovieBox.SelectedItem != null;
         }
     }
 }

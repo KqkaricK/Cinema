@@ -24,11 +24,11 @@
             HorizontalAlignment="Center">
         </local:UserViborMesta>
         
-        <local:UserAddFilm 
-            x:Name="AddFilm"
+        <local:UserAddMovie 
+            x:Name="AddMovie"
             HorizontalAlignment="Center"
             Visibility="Collapsed">
-        </local:UserAddFilm>
+        </local:UserAddMovie>
 
     </Grid>
 </Window>

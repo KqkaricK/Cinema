@@ -17,11 +17,11 @@ namespace Cinema
             {
                 case 0:
                     ViborZal.Visibility = Visibility.Collapsed;
-                    AddFilm.Visibility = Visibility.Visible;
+                    AddMovie.Visibility = Visibility.Visible;
                     break;
                 case 1:
                     ViborZal.Visibility = Visibility.Visible;
-                    AddFilm.Visibility = Visibility.Collapsed;
+                    AddMovie.Visibility = Visibility.Collapsed;
                     break;
                 default:
                     break;
