@@ -1,4 +1,5 @@
 ﻿using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Shapes;
 
 namespace Cinema
@@ -6,7 +7,8 @@ namespace Cinema
     public class ViborMesta
     {
         public readonly bool[,] seats;
-        private const int size = 32;
+        private const int baseSize = 32;
+        private const int enlargedSize = 36;
         private const int space = 4;
 
         public ViborMesta(string nameMovie) => seats = DatabaseManager.RetrieveSeatsData(nameMovie);
@@ -22,8 +24,8 @@ namespace Cinema
                     Rectangle rectangle = CreateSeatRectangle(j, i);
                     HandleRectangleMouseLeftButtonDown(rectangle);
                     MyCanvas.Children.Add(rectangle);
-                    Canvas.SetLeft(rectangle, i * (size + space));
-                    Canvas.SetTop(rectangle, j * (size + space));
+                    Canvas.SetLeft(rectangle, i * (baseSize + space));
+                    Canvas.SetTop(rectangle, j * (baseSize + space));
                 }
         }
 
@@ -31,8 +33,8 @@ namespace Cinema
         {
             return new()
             {
-                Height = size,
-                Width = size,
+                Height = baseSize,
+                Width = baseSize,
                 Fill = seats[i, j] ? MainColors.redBrush : MainColors.greenBrush
             };
         }
@@ -42,9 +44,29 @@ namespace Cinema
             rectangle.MouseLeftButtonDown += (sender, e) =>
             {
                 rectangle.Fill = (rectangle.Fill == MainColors.redBrush) ? MainColors.greenBrush : MainColors.redBrush;
-                int x = (int)(Canvas.GetLeft(rectangle) / (size + space));
-                int y = (int)(Canvas.GetTop(rectangle) / (size + space));
+                int x = (int)(Canvas.GetLeft(rectangle) / (baseSize + space));
+                int y = (int)(Canvas.GetTop(rectangle) / (baseSize + space));
                 ToggleSeatStatus(x, y);
+            };
+
+            rectangle.MouseEnter += (sender, e) =>
+            {
+                double newLeft = Canvas.GetLeft(rectangle) - (enlargedSize - baseSize) / 2;
+                double newTop = Canvas.GetTop(rectangle) - (enlargedSize - baseSize) / 2;
+                rectangle.Width = rectangle.Height = enlargedSize;
+                Canvas.SetLeft(rectangle, newLeft);
+                Canvas.SetTop(rectangle, newTop);
+                rectangle.Cursor = Cursors.Hand;
+            };
+
+            rectangle.MouseLeave += (sender, e) =>
+            {
+                double newLeft = Canvas.GetLeft(rectangle) + (enlargedSize - baseSize) / 2;
+                double newTop = Canvas.GetTop(rectangle) + (enlargedSize - baseSize) / 2;
+                rectangle.Width = rectangle.Height = baseSize;
+                Canvas.SetLeft(rectangle, newLeft);
+                Canvas.SetTop(rectangle, newTop);
+                rectangle.Cursor = Cursors.Arrow;
             };
         }
     }
