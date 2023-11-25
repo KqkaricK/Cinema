@@ -19,7 +19,7 @@ namespace Cinema
             }
 
             if (SaveMovieMessage.MessageQueue != null)
-                SaveMovieMessage.MessageQueue.Enqueue("Добавьте название фильма и зал");
+                SaveMovieMessage.MessageQueue.Enqueue("Добавьте название фильма!");
         }
 
         private void AddMovieToDataBase()

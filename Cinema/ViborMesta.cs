@@ -17,6 +17,7 @@ namespace Cinema
 
         public void DrawRectangles(Canvas MyCanvas)
         {
+            MyCanvas.Children.Clear();
             using var connection = DatabaseManager.OpenConnection();
             for (int j = 0; j < seats.GetLength(1); j++)
                 for (int i = 0; i < seats.GetLength(0); i++)
@@ -49,25 +50,28 @@ namespace Cinema
                 ToggleSeatStatus(x, y);
             };
 
+            double offset = (enlargedSize - baseSize) / 2;
+
             rectangle.MouseEnter += (sender, e) =>
             {
-                double newLeft = Canvas.GetLeft(rectangle) - (enlargedSize - baseSize) / 2;
-                double newTop = Canvas.GetTop(rectangle) - (enlargedSize - baseSize) / 2;
-                rectangle.Width = rectangle.Height = enlargedSize;
-                Canvas.SetLeft(rectangle, newLeft);
-                Canvas.SetTop(rectangle, newTop);
+                ChangeRectangleSize(rectangle, enlargedSize, -offset);
                 rectangle.Cursor = Cursors.Hand;
             };
 
             rectangle.MouseLeave += (sender, e) =>
             {
-                double newLeft = Canvas.GetLeft(rectangle) + (enlargedSize - baseSize) / 2;
-                double newTop = Canvas.GetTop(rectangle) + (enlargedSize - baseSize) / 2;
-                rectangle.Width = rectangle.Height = baseSize;
-                Canvas.SetLeft(rectangle, newLeft);
-                Canvas.SetTop(rectangle, newTop);
+                ChangeRectangleSize(rectangle, baseSize, offset);
                 rectangle.Cursor = Cursors.Arrow;
             };
+        }
+
+        private void ChangeRectangleSize(Rectangle rectangle, double newSize, double offset)
+        {
+            double newLeft = Canvas.GetLeft(rectangle) + offset;
+            double newTop = Canvas.GetTop(rectangle) + offset;
+            rectangle.Width = rectangle.Height = newSize;
+            Canvas.SetLeft(rectangle, newLeft);
+            Canvas.SetTop(rectangle, newTop);
         }
     }
 }
