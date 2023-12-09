@@ -18,10 +18,10 @@
     <Grid>
         <Label Name="userNameLabel" Content="userNameLabel" HorizontalAlignment="Center"
                Margin="0,20,0,0" VerticalAlignment="Top" Panel.ZIndex="1"/>
-        
+
         <local:UserViborMesta 
             x:Name="ViborZal"
-            HorizontalAlignment="Center">
+            HorizontalAlignment="Center" Width="650">
         </local:UserViborMesta>
         
         <local:UserAddMovie 
@@ -29,6 +29,12 @@
             HorizontalAlignment="Center"
             Visibility="Collapsed">
         </local:UserAddMovie>
+
+        <local:UserDelMovie
+            x:Name="DelMovie"
+            HorizontalAlignment="Center"
+            Visibility="Collapsed">
+        </local:UserDelMovie>
 
     </Grid>
 </Window>

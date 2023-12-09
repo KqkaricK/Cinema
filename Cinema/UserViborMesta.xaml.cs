@@ -52,12 +52,12 @@ namespace Cinema
         {
             if (Window.GetWindow(this) is MainWindow mainWindow)
             {
-                mainWindow.SwitchVisible(0);
+                mainWindow.SwitchVisibility(MainWindow.VisibilityMode.AddMovie);
             }
             MovieBox.SelectedIndex = -1;
         }
 
-        private void RefreshMovieList(int tableValue)
+        public void RefreshMovieList(int tableValue)
         {
             List<string> movieNames = DatabaseManager.GetMovieNamesForHall(tableValue);
             MovieBox.Items.Clear();
@@ -70,6 +70,20 @@ namespace Cinema
         private void UpdateSaveButtonState()
         {
             Save.IsEnabled = MovieBox.SelectedItem != null;
+        }
+
+        private void Del_Click(object sender, RoutedEventArgs e)
+        {
+            if (Window.GetWindow(this) is MainWindow mainWindow)
+            {
+                mainWindow.SwitchVisibility(MainWindow.VisibilityMode.DelMovie);
+            }
+            MovieBox.SelectedIndex = -1;
+        }
+
+        public void RefreshZalList()
+        {
+            ZalComboBox.SelectedIndex = 0;
         }
     }
 }

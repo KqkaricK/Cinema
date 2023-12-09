@@ -11,17 +11,32 @@ namespace Cinema
             userNameLabel.Content = $"Добро пожаловать, {Auth.UserName}";
         }
 
-        public void SwitchVisible(int value)
+        public enum VisibilityMode
         {
-            switch (value)
+            AddMovie,
+            ViborZal,
+            DelMovie,
+        }
+
+        public void SwitchVisibility(VisibilityMode mode)
+        {
+            AddMovie.Visibility = Visibility.Collapsed;
+            ViborZal.Visibility = Visibility.Collapsed;
+            DelMovie.Visibility = Visibility.Collapsed;
+
+            switch (mode)
             {
-                case 0:
-                    ViborZal.Visibility = Visibility.Collapsed;
+                case VisibilityMode.AddMovie:
                     AddMovie.Visibility = Visibility.Visible;
                     break;
-                case 1:
+                case VisibilityMode.ViborZal:
                     ViborZal.Visibility = Visibility.Visible;
-                    AddMovie.Visibility = Visibility.Collapsed;
+                    ViborZal.RefreshMovieList(0);
+                    ViborZal.RefreshZalList();
+                    break;
+                case VisibilityMode.DelMovie:
+                    DelMovie.Visibility = Visibility.Visible;
+                    DelMovie.UpdateComboBox();
                     break;
                 default:
                     break;

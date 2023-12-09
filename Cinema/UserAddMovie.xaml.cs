@@ -14,11 +14,9 @@ namespace Cinema
         private void AddMovie_Click(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrEmpty(NameMovieBox.Text) && !string.IsNullOrEmpty(ZalBox.Text))
-            {
                 AddMovieToDataBase();
-            }
 
-            if (SaveMovieMessage.MessageQueue != null)
+            else if (SaveMovieMessage.MessageQueue != null)
                 SaveMovieMessage.MessageQueue.Enqueue("Добавьте название фильма!");
         }
 
@@ -29,6 +27,7 @@ namespace Cinema
             string newMovieName = NameMovieBox.Text;
             int newZalForMovie = ZalBox.SelectedIndex;
             bool[,] newSeats = new bool[7, 15];
+
             for (int i = 0; i < 7; i++)
                 for (int j = 0; j < 15; j++)
                     newSeats[i, j] = false;
@@ -47,7 +46,7 @@ namespace Cinema
         {
             if (Window.GetWindow(this) is MainWindow mainWindow)
             {
-                mainWindow.SwitchVisible(1);
+                mainWindow.SwitchVisibility(MainWindow.VisibilityMode.ViborZal);
             }
             NameMovieBox.Text = "";
             ZalBox.SelectedIndex = -1;

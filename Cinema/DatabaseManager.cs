@@ -77,6 +77,24 @@ namespace Cinema
             }
             return movieNames;
         }
+
+        public static List<string> GetMovieNames()
+        {
+            List<string> movieNames = new();
+
+            using (var connection = OpenConnection())
+            {
+                string sql = $"SELECT name FROM movie";
+                using var command = new NpgsqlCommand(sql, connection);
+                using var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    string movieName = reader.GetString(0);
+                    movieNames.Add(movieName);
+                }
+            }
+            return movieNames;
+        }
     }
 }
 
