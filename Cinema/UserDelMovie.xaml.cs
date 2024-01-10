@@ -18,8 +18,8 @@ namespace Cinema
             if (!string.IsNullOrEmpty(MovieBox.Text))
                 DelMovieToDataBase();
 
-            else if (SaveMovieMessage.MessageQueue != null)
-                SaveMovieMessage.MessageQueue.Enqueue("Выбирите фильм!");
+            else
+                SaveMovieMessage.MessageQueue?.Enqueue("Выбирите фильм!");
         }
 
         private void DelMovieToDataBase()
